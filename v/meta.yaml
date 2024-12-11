@@ -1,0 +1,40 @@
+{% set name = "v" %}
+{% set version = "1" %}
+
+package:
+  name: {{ name|lower }}
+  version: {{ version }}
+
+source:
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/v-{{ version }}.tar.gz
+  sha256: e3c5cec546cc37f56cad894546816829353b3470545c69404c400112e7db55b4
+
+build:
+  noarch: python
+  script: {{ PYTHON }} -m pip install . -vv --no-deps --no-build-isolation
+  number: 0
+
+requirements:
+  host:
+    - python >=3.0,<4.0
+    - poetry-core
+    - pip
+  run:
+    - python >=3.0.0,<4.0.0
+
+test:
+  imports:
+    - v
+  commands:
+    - pip check
+  requires:
+    - pip
+
+about:
+  summary: v makes building projects easier. It's as simple as that.
+  license: ''
+  license_file: LICENSE
+
+extra:
+  recipe-maintainers:
+    - AddYourGitHubIdHere
